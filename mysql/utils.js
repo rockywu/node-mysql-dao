@@ -26,7 +26,6 @@ function getCallback(args) {
  */
 function testAsyncFunc(target = "default", func = () => {}) {
     let params = [].slice.call(arguments, 2);
-    console.log(99, params)
     let ln = params.length;
     if(!ln || !isFunction(params[ln - 1])) {
         params.push(function(err) {
