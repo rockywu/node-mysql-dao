@@ -16,6 +16,18 @@ var cl = getClient({
     database        : 'icons'
 },log);
 
+/**
+ * tableinfo 
+  CREATE TABLE `permissions` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `gid` int(11) NOT NULL COMMENT '集合id',
+    `uid` int(11) NOT NULL COMMENT '用户id',
+    `aid` int(11) NOT NULL COMMENT '权限id',
+    `create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `gid` (`gid`,`uid`,`aid`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='用户权限关联关系';
+ */
 var permissions = getDaoByClient(cl, "permissions", "id", log);
 
 testAsyncFunc("getall", permissions.find.bind(permissions), { "id > ?" : 0});
@@ -25,7 +37,7 @@ testAsyncFunc("getall", permissions.find.bind(permissions), { "id > ?" : 0});
 
 #### API
 
-* getClient
+* getClient(configure, logFunc)
 
 ```
 /**
@@ -41,9 +53,10 @@ testAsyncFunc("getall", permissions.find.bind(permissions), { "id > ?" : 0});
  * @param function logFunc 日志函数
  * @return Client
  */
+getClient(configure, logFunc)
 ```
 
-* getDaoByClient
+* getDaoByClient(clientHandle, tableName, tablePk, logFunc)
 
 ```
 /**
@@ -54,9 +67,10 @@ testAsyncFunc("getall", permissions.find.bind(permissions), { "id > ?" : 0});
  * @param Function logFunc 日志函数
  * @return Dao
  */
+getDaoByClient(clientHandle, tableName, tablePk, logFunc)
 ```
 
-* testAsyncFunc
+* testAsyncFunc(target, func)
 
 ```
 /**
@@ -64,5 +78,6 @@ testAsyncFunc("getall", permissions.find.bind(permissions), { "id > ?" : 0});
  * @param String target
  * @param Function func
  */
+testAsyncFunc(target, func)
 ```
 
