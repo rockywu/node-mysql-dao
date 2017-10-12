@@ -59,7 +59,7 @@ dao.prototype.buildWhere = function(where) {
                 }
                 if(isArray(val)) {
                     let p = [];
-                    _.forEach(val, function(v){
+                    forEach(val, function(v){
                         p.push("?");
                         params.push(v);
                     });
@@ -205,7 +205,7 @@ dao.prototype.update = function(data, where) {
     let params = [];
     let sql = "UPDATE";
     sql += " " + this.tb;
-    _.forEach(data, function(val, key) {
+    forEach(data, function(val, key) {
         if(_this.pk == key || !_this.fields[key]) { return; }
         sets.push("`" + key + "`" + "= ?");
         params.push(val);
@@ -213,7 +213,7 @@ dao.prototype.update = function(data, where) {
     sql += " SET " + sets.join(",");
     let buildWhere = this.buildWhere(where);
     sql += " " + buildWhere.sql;
-    _.forEach(buildWhere.params, function (val) {
+    forEach(buildWhere.params, function (val) {
         params.push(val);
     });
     let cb = getCallback(arguments);
@@ -269,9 +269,8 @@ function formatSqlData(type, data) {
             result = data || [];
             break;
         case 'UPDATE':
-            result = !isNull(data);
         case 'DELETE':
-            result = !isNull(data) ? data.affectedRows >= 0 : false;
+            result = !isNull(data) ? (parseInt(data.affectedRows, 10) || 0) : 0;
             break;
         default:
             break;
