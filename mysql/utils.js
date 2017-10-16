@@ -32,7 +32,7 @@ function testAsyncFunc(target = "default", func = () => {}) {
             if(err) {
                 return console.log(target + " -- Error:\n", err);
             }
-            return console.log(target + " -- Success:\n", [].slice.call(arguments, 1));
+            return console.log(target + " -- Success:\n", ...[].slice.call(arguments, 1));
         })
     }
     setTimeout(function() {
